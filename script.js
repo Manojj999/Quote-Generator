@@ -3,10 +3,25 @@ const quoteText = document.getElementById('quote');
 const authorText = document.getElementById('author');
 const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
+const loader = document.getElementById('loader');
 
+
+function Showloading() {
+    loader.hidden = false;
+    quoteContainer.hidden = true;
+}
+
+
+
+function HideLoading() {
+    if (!loader.hidden) {
+        quoteContainer.hidden = false;
+        loader.hidden = true;
+    }
+}
 //get quote from API
 async function getQuote() {
-    // loading();
+    Showloading();
     // We need to use a Proxy URL to make our API call in order to avoid a CORS error
     const proxyUrl = 'https://jacinto-cors-proxy.herokuapp.com/';
     const apiUrl = 'https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
@@ -27,9 +42,9 @@ async function getQuote() {
         }
         quoteText.innerText = data.quoteText;
         // Stop Loading, Show Quote
-        complete();
+        HideLoading();
     } catch (error) {
-        
+        document.write("<h1>" +"Oops! SomeThings Went to Wrong. Please Try Again..."+"</h1>");
     }
 }
 
